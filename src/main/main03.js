@@ -1,9 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import gsap from 'gasp'
 console.log(OrbitControls);
 
-// 目标：掌握gasp设置各种动画效果
+// 目标：控制3D物体移动
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -26,12 +25,7 @@ const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
 // 修改物体位置
 // cube.position.set(5,0,0) // 两种方式都可以
-// cube.position.x = 5;
-// 缩放
-// cube.scale.set(3,2,1)
-// cube.scale.x= 5
-// 旋转
-cube.rotation.set(Math.PI / 4, 0, 0);
+cube.position.x = 5;
 
 scene.add(cube);
 
@@ -49,20 +43,16 @@ const controls = new OrbitControls(camera, renderer.domElement);
 // 添加坐标轴辅助器
 const axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
-let left = true;
-function render(time) {
-  console.log(time);
+let left = true
+function render() {
   if (cube.position.x <= 0) {
-    left = true;
+    left = true
     // cube.position.x += 0.01;
   } else if (cube.position.x > 5) {
-    left = false;
+    left = false
     // cube.position.x -= 0.01;
   }
-  cube.position.x = left ? cube.position.x + 0.01 : cube.position.x - 0.01;
-  cube.rotation.x = left
-    ? cube.rotation.x + Math.PI / 100
-    : cube.rotation.x - Math.PI / 100;
+  cube.position.x = left ?  cube.position.x + 0.01 :  cube.position.x - 0.01
   renderer.render(scene, camera);
   requestAnimationFrame(render);
 }
